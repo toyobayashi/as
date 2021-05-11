@@ -1,0 +1,47 @@
+{
+  "name": "@tybys/as",
+  "version": "0.0.1",
+  "description": "",
+  "typings": "./lib/cjs-modern/index.d.ts",
+  "module": "./lib/esm/index.js",
+  "main": "./lib/cjs-modern/index.js",
+  "scripts": {
+    "prepare": "npm run build",
+    "cjs": "tsgo cjs",
+    "esm": "tsgo esm",
+    "umd": "tsgo umd",
+    "dts": "tsgo dts",
+    "doc": "tsgo doc",
+    "watch": "tsgo watch",
+    "build": "tsgo build",
+    "lint": "tsgo lint",
+    "fix": "tsgo fix"
+  },
+  "keywords": [],
+  "author": "Administrator",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@tybys/tsgo": "^0.11.1",
+    "@types/lzma-native": "^4.0.0",
+    "@types/node": "^14.14.41",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
+    "eslint": "^7.25.0",
+    "eslint-config-standard-with-typescript": "^20.0.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "rollup": "^2.47.0",
+    "typescript": "~4.2.4"
+  },
+  "dependencies": {
+    "@tybys/binreader": "^0.3.0",
+    "@tybys/native-require": "^3.0.3",
+    "lz4": "^0.6.5",
+    "lzma-native": "^7.0.1",
+    "tslib": "2.2.0"
+  }
+}
