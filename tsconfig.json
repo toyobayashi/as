@@ -2,7 +2,8 @@
   "extends": "./node_modules/@tybys/tsgo/tsconfig/tsconfig.json",
   "compilerOptions": {
     "target": "ES2019",
-    "outDir": "./lib/cjs-modern"
+    "outDir": "./lib/cjs-modern",
+    "importsNotUsedAsValues": "error"
   },
   "include": [
     "./src/**/*"

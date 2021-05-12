@@ -1,4 +1,4 @@
-import { IDisposable } from './IDisposable'
+import type { IDisposable } from './IDisposable'
 
 export function using<D extends IDisposable, H extends (disposable: D) => any> (disposable: D, handler: H): ReturnType<H> {
   let r: ReturnType<H>

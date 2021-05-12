@@ -1,4 +1,4 @@
-import { TypeTreeNode } from './TypeTreeNode'
+import type { TypeTreeNode } from './TypeTreeNode'
 
 /** @public */
 export class SerializedType {

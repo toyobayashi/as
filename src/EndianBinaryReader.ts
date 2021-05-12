@@ -57,4 +57,15 @@ export class EndianBinaryReader extends BinaryReader {
     }
     return EndianBinaryReader.readArray(this.readInt32.bind(this), length)
   }
+
+  public readAlignedString (): string {
+    const length = this.readInt32()
+    if (length > 0 && length <= this.size - this.pos) {
+      const stringData = Buffer.from(this.read(length))
+      const result = stringData.toString('utf8')
+      this.alignStream(4)
+      return result
+    }
+    return ''
+  }
 }

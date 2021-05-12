@@ -1,5 +1,5 @@
 import { readSync, writeSync, fstatSync, closeSync } from 'fs'
-import { IDisposable } from './IDisposable'
+import type { IDisposable } from './IDisposable'
 
 /** @public */
 export abstract class Stream implements IDisposable {

@@ -1,11 +1,11 @@
-import { ClassIDType } from '../ClassIDType'
-import { ObjectReader } from '../ObjectReader'
+import type { ClassIDType } from '../ClassIDType'
+import type { ObjectReader } from '../ObjectReader'
 import type { BuildType } from '../BuildType'
-import { SerializedFile } from '../SerializedFile'
+import type { SerializedFile } from '../SerializedFile'
 import { BuildTarget } from '../BuildTarget'
 import type { SerializedType } from '../SerializedType'
 
-export class Object {
+class _Object {
   public assetsFile: SerializedFile
   public reader: ObjectReader
   public /* long */ m_PathID: bigint
@@ -78,3 +78,5 @@ export class Object {
     return Buffer.from(this.reader.read(this.byteSize))
   }
 }
+
+export { _Object as Object }

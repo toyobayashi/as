@@ -3,7 +3,7 @@ import type { BuildType } from './BuildType'
 import { ClassIDType } from './ClassIDType'
 import { EndianBinaryReader } from './EndianBinaryReader'
 import type { ObjectInfo } from './ObjectInfo'
-import { SerializedFile } from './SerializedFile'
+import type { SerializedFile } from './SerializedFile'
 import type { SerializedType } from './SerializedType'
 
 export class ObjectReader extends EndianBinaryReader {
