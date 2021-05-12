@@ -69,10 +69,16 @@ export class AssetsManager {
         }
         this.assetsFileList.add(assetsFile)
         this.assetsFileListHash.add(assetsFile.fileName)
-      } catch {
-        // Logger.Error($"Unable to load assets file {fileName} from {Path.GetFileName(originalPath)}");
+      } catch (_) {
+        // console.error(_)
+        // console.error(`Unable to load assets file ${fileName} from ${basename(originalPath)}`)
         this.resourceFileReaders.set(fileName, reader)
       }
     }
+  }
+
+  public readAssets (): void {
+    // TODO
+    console.log('not implemented yet')
   }
 }

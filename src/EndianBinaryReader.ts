@@ -3,6 +3,8 @@ import { Stream, FileStream, MemoryStream } from './util/Stream'
 
 /** @public */
 export class EndianBinaryReader extends BinaryReader {
+  protected _stream: Stream | null
+
   public constructor (buffer: string | Uint8Array | Stream) {
     if (buffer instanceof Stream) {
       if (buffer instanceof FileStream) {
@@ -12,12 +14,14 @@ export class EndianBinaryReader extends BinaryReader {
       } else {
         throw new Error('This should not happen')
       }
+      this._stream = buffer
     } else {
       super(buffer)
+      this._stream = null
     }
   }
 
-  readStringToNull (maxLength = 32767): string {
+  public readStringToNull (maxLength = 32767): string {
     const bytes: number[] = []
     let count = 0
     while (this.tell() !== this.size && count < maxLength) {
@@ -31,11 +35,26 @@ export class EndianBinaryReader extends BinaryReader {
     return Buffer.from(bytes).toString()
   }
 
-  alignStream (alignment: number): void {
+  public alignStream (alignment: number = 4): void {
     const pos = this.tell()
     const mod = pos % alignment
     if (mod !== 0) {
       this.pos += alignment - mod
     }
+  }
+
+  private static readArray<T> (del: (...args: any[]) => T, length: number): T[] {
+    const array = Array(length)
+    for (let i = 0; i < length; i++) {
+      array[i] = del()
+    }
+    return array
+  }
+
+  public readInt32Array (length?: number): number[] {
+    if (length == null) {
+      length = this.readInt32()
+    }
+    return EndianBinaryReader.readArray(this.readInt32.bind(this), length)
   }
 }

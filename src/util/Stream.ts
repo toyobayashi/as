@@ -46,10 +46,10 @@ export class FileStream extends Stream {
 export class MemoryStream extends Stream {
   public buffer: Buffer
 
-  public constructor (size: number) {
+  public constructor (size: number | Buffer) {
     super()
-    this.buffer = Buffer.alloc(size)
-    this.length = size
+    this.buffer = typeof size === 'number' ? Buffer.alloc(size) : size
+    this.length = typeof size === 'number' ? size : size.length
   }
 
   public read (buf: Buffer, bufOffset: number = 0, count: number = buf.length): void {
