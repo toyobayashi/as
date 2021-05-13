@@ -42,6 +42,7 @@
     "@tybys/native-require": "^3.0.3",
     "lz4": "^0.6.5",
     "lzma-native": "^7.0.1",
+    "node-addon-api": "3.1.0",
     "tslib": "2.2.0"
   }
 }

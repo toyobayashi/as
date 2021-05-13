@@ -6,6 +6,6 @@
     "importsNotUsedAsValues": "error"
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*.ts"
   ]
 }

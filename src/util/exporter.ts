@@ -59,12 +59,12 @@ function getExtensionName (m_AudioClip: AudioClip): string {
   return '.AudioClip'
 }
 
-export async function exportAudioClip (m_AudioClip: AudioClip, exportPath: string, name: string): Promise<boolean> {
+export function exportAudioClip (m_AudioClip: AudioClip, exportPath: string, name: string): boolean {
   const m_AudioData = m_AudioClip.m_AudioData.getData()
   if (m_AudioData == null || m_AudioData.length === 0) { return false }
   const converter = new AudioClipConverter(m_AudioClip)
   if (converter.isSupport) {
-    const buffer = await converter.convertToWav()
+    const buffer = converter.convertToWav()
     if (buffer == null) { return false }
     writeFileSync(join(exportPath, name + '.wav'), buffer)
   } else {
