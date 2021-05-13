@@ -160,7 +160,6 @@ static Value _convertToWav(const CallbackInfo& info) {
 
 static void cleanupData(Napi::Env env, void* data) {
   dlclose(data);
-  env.SetInstanceData((void*)0);
 }
 
 static void exportFunctions(const Env& env, const ObjectReference& exportsRef) {
@@ -190,7 +189,7 @@ static Value _init(const CallbackInfo& info) {
     return Boolean::New(env, false);
   }
 
-  env.SetInstanceData(handle, cleanupData);
+  env.SetInstanceData<void, cleanupData>(handle);
   exportFunctions(env, exports);
   return Boolean::New(env, true);
 }
