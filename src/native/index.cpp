@@ -60,11 +60,11 @@ static Value _soundToWav(const CallbackInfo& info, FMOD_SOUND* sound) {
   Env env = info.Env();
   void* dll = env.GetInstanceData<void>();
 
-  auto FMOD_Sound_GetFormat = static_cast<FMOD_Sound_GetFormat_t>(dlsym(dll, "FMOD_Sound_GetFormat"));
-  auto FMOD_Sound_GetLength = static_cast<FMOD_Sound_GetLength_t>(dlsym(dll, "FMOD_Sound_GetLength"));
-  auto FMOD_Sound_GetDefaults = static_cast<FMOD_Sound_GetDefaults_t>(dlsym(dll, "FMOD_Sound_GetDefaults"));
-  auto FMOD_Sound_Lock = static_cast<FMOD_Sound_Lock_t>(dlsym(dll, "FMOD_Sound_Lock"));
-  auto FMOD_Sound_Unlock = static_cast<FMOD_Sound_Unlock_t>(dlsym(dll, "FMOD_Sound_Unlock"));
+  auto FMOD_Sound_GetFormat = reinterpret_cast<FMOD_Sound_GetFormat_t>(dlsym(dll, "FMOD_Sound_GetFormat"));
+  auto FMOD_Sound_GetLength = reinterpret_cast<FMOD_Sound_GetLength_t>(dlsym(dll, "FMOD_Sound_GetLength"));
+  auto FMOD_Sound_GetDefaults = reinterpret_cast<FMOD_Sound_GetDefaults_t>(dlsym(dll, "FMOD_Sound_GetDefaults"));
+  auto FMOD_Sound_Lock = reinterpret_cast<FMOD_Sound_Lock_t>(dlsym(dll, "FMOD_Sound_Lock"));
+  auto FMOD_Sound_Unlock = reinterpret_cast<FMOD_Sound_Unlock_t>(dlsym(dll, "FMOD_Sound_Unlock"));
 
   FMOD_SOUND_TYPE type;
   FMOD_SOUND_FORMAT format;
@@ -122,12 +122,12 @@ static Value _convertToWav(const CallbackInfo& info) {
   Buffer<uint8_t> m_AudioData = info[0].As<Buffer<uint8_t>>();
 
   void* dll = env.GetInstanceData<void>();
-  auto FMOD_System_Create = static_cast<FMOD_System_Create_t>(dlsym(dll, "FMOD_System_Create"));
-  auto FMOD_System_Release = static_cast<FMOD_System_Release_t>(dlsym(dll, "FMOD_System_Release"));
-  auto FMOD_System_CreateSound = static_cast<FMOD_System_CreateSound_t>(dlsym(dll, "FMOD_System_CreateSound"));
-  auto FMOD_Sound_GetNumSubSounds = static_cast<FMOD_Sound_GetNumSubSounds_t>(dlsym(dll, "FMOD_Sound_GetNumSubSounds"));
-  auto FMOD_Sound_Release = static_cast<FMOD_Sound_Release_t>(dlsym(dll, "FMOD_Sound_Release"));
-  auto FMOD_System_Init = static_cast<FMOD_System_Init_t>(dlsym(dll, "FMOD_System_Init"));
+  auto FMOD_System_Create = reinterpret_cast<FMOD_System_Create_t>(dlsym(dll, "FMOD_System_Create"));
+  auto FMOD_System_Release = reinterpret_cast<FMOD_System_Release_t>(dlsym(dll, "FMOD_System_Release"));
+  auto FMOD_System_CreateSound = reinterpret_cast<FMOD_System_CreateSound_t>(dlsym(dll, "FMOD_System_CreateSound"));
+  auto FMOD_Sound_GetNumSubSounds = reinterpret_cast<FMOD_Sound_GetNumSubSounds_t>(dlsym(dll, "FMOD_Sound_GetNumSubSounds"));
+  auto FMOD_Sound_Release = reinterpret_cast<FMOD_Sound_Release_t>(dlsym(dll, "FMOD_Sound_Release"));
+  auto FMOD_System_Init = reinterpret_cast<FMOD_System_Init_t>(dlsym(dll, "FMOD_System_Init"));
 
   FMOD_SYSTEM* system = nullptr;
   FMOD_CALL_NULL(env, FMOD_System_Create(&system));
@@ -146,7 +146,7 @@ static Value _convertToWav(const CallbackInfo& info) {
   FMOD_CALL_NULL_R2(env, FMOD_Sound_GetNumSubSounds(sound, &numsubsounds));
   if (numsubsounds > 0) {
     FMOD_SOUND *subsound = nullptr;
-    auto FMOD_Sound_GetSubSound = static_cast<FMOD_Sound_GetSubSound_t>(dlsym(dll, "FMOD_Sound_GetSubSound"));
+    auto FMOD_Sound_GetSubSound = reinterpret_cast<FMOD_Sound_GetSubSound_t>(dlsym(dll, "FMOD_Sound_GetSubSound"));
     FMOD_CALL_NULL_R2(env, FMOD_Sound_GetSubSound(sound, 0, &subsound));
     Value buff = _soundToWav(info, subsound);
     FMOD_Sound_Release(subsound);
