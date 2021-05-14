@@ -1,5 +1,5 @@
-import { writeFileSync } from 'fs'
-import { join } from 'path'
+import { mkdirSync, writeFileSync } from 'fs'
+import { dirname, join } from 'path'
 import { AudioClip, AudioCompressionFormat, AudioType } from '../classes/AudioClip'
 import { AudioClipConverter } from './AudioClipConverter'
 
@@ -66,9 +66,13 @@ export function exportAudioClip (m_AudioClip: AudioClip, exportPath: string, nam
   if (converter.isSupport) {
     const buffer = converter.convertToWav()
     if (buffer == null) { return false }
-    writeFileSync(join(exportPath, name + '.wav'), buffer)
+    const outfile = join(exportPath, name + '.wav')
+    mkdirSync(dirname(outfile), { recursive: true })
+    writeFileSync(outfile, buffer)
   } else {
-    writeFileSync(join(exportPath, name + getExtensionName(m_AudioClip)), m_AudioData)
+    const outfile = join(exportPath, name + getExtensionName(m_AudioClip))
+    mkdirSync(dirname(outfile), { recursive: true })
+    writeFileSync(outfile, m_AudioData)
   }
   return true
 }

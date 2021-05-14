@@ -18,9 +18,30 @@ export class AssetsManager {
   // private readonly assetsFileIndexCache = new Map<string, number>()
   public readonly resourceFileReaders = new Map<string, BinaryReader>()
 
-  // private readonly importFiles = new Set<string>()
-  // private readonly importFilesHash = new Set<string>()
+  private readonly importFiles: string[] = []
+  private readonly importFilesHash = new Set<string>()
   private readonly assetsFileListHash = new Set<string>()
+
+  public async load (files: string[]): Promise<void> {
+    for (const file of files) {
+      this.importFiles.push(file)
+      this.importFilesHash.add(basename(file))
+    }
+
+    // Progress.Reset()
+    // use a for loop because list size can change
+    for (let i = 0; i < this.importFiles.length; i++) {
+      await this.loadFile(this.importFiles[i])
+      // Progress.Report(i + 1, importFiles.Count)
+    }
+
+    this.importFiles.length = 0
+    this.importFilesHash.clear()
+    this.assetsFileListHash.clear()
+
+    this.readAssets()
+    this.processAssets()
+  }
 
   public async loadFile (fullName: string): Promise<void> {
     const reader = new EndianBinaryReader(fullName)
@@ -247,5 +268,9 @@ export class AssetsManager {
         }
       }
     }
+  }
+
+  public processAssets (): void {
+    // TODO
   }
 }
