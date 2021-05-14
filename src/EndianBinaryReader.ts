@@ -68,4 +68,8 @@ export class EndianBinaryReader extends BinaryReader {
     }
     return ''
   }
+
+  public readUInt8Array (): Buffer {
+    return Buffer.from(this.read(this.readInt32()))
+  }
 }

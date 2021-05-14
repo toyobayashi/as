@@ -9,6 +9,8 @@ import { SerializedFile } from './SerializedFile'
 import { ClassIDType } from './ClassIDType'
 import { AudioClip } from './classes/AudioClip'
 import { AssetBundle } from './classes/AssetBundle'
+import { Texture2D } from './classes/Texture2D'
+import { NotImplementedException } from './util/Exception'
 
 /** @public */
 export class AssetsManager {
@@ -22,18 +24,19 @@ export class AssetsManager {
 
   public async loadFile (fullName: string): Promise<void> {
     const reader = new EndianBinaryReader(fullName)
-    switch (checkFileType(reader)) {
+    const type = checkFileType(reader)
+    switch (type) {
       case FileType.AssetsFile:
         // LoadAssetsFile(fullName, reader);
         // break;
-        throw new Error('not implemented yet')
+        throw new NotImplementedException('AssetsManager::loadFile()', `FileType.${FileType[type]}`)
       case FileType.BundleFile:
         await this.loadBundleFile(fullName, reader)
         break
       case FileType.WebFile:
         // LoadWebFile(fullName, reader);
         // break;
-        throw new Error('not implemented yet')
+        throw new NotImplementedException('AssetsManager::loadFile()', `FileType.${FileType[type]}`)
     }
   }
 
@@ -96,23 +99,23 @@ export class AssetsManager {
             case ClassIDType.Animation:
               // obj = new Animation(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.AnimationClip:
               // obj = new AnimationClip(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.Animator:
               // obj = new Animator(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.AnimatorController:
               // obj = new AnimatorController(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.AnimatorOverrideController:
               // obj = new AnimatorOverrideController(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.AssetBundle:
               obj = new AssetBundle(objectReader)
               break
@@ -122,87 +125,86 @@ export class AssetsManager {
             case ClassIDType.Avatar:
               // obj = new Avatar(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.Font:
               // obj = new Font(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.GameObject:
               // obj = new GameObject(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.Material:
               // obj = new Material(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.Mesh:
               // obj = new Mesh(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.MeshFilter:
               // obj = new MeshFilter(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.MeshRenderer:
               // obj = new MeshRenderer(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.MonoBehaviour:
               // obj = new MonoBehaviour(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.MonoScript:
               // obj = new MonoScript(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.MovieTexture:
               // obj = new MovieTexture(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.PlayerSettings:
               // obj = new PlayerSettings(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.RectTransform:
               // obj = new RectTransform(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.Shader:
               // obj = new Shader(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.SkinnedMeshRenderer:
               // obj = new SkinnedMeshRenderer(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.Sprite:
               // obj = new Sprite(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.SpriteAtlas:
               // obj = new SpriteAtlas(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.TextAsset:
               // obj = new TextAsset(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.Texture2D:
-              // obj = new Texture2D(objectReader)
-              // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              obj = new Texture2D(objectReader)
+              break
             case ClassIDType.Transform:
               // obj = new Transform(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.VideoClip:
               // obj = new VideoClip(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             case ClassIDType.ResourceManager:
               // obj = new ResourceManager(objectReader)
               // break
-              throw new Error(`not implemented yet {ClassIDType.${ClassIDType[objectReader.classIDType]}}`)
+              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
             default:
               obj = new Object(objectReader)
               break
