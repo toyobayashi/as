@@ -14,9 +14,8 @@ assetsManager.load(items).then(() => {
   for (const assetFile of assetsManager.assetsFileList) {
     const objects = assetFile.Objects
     for (const obj of objects) {
-      console.log(Object.prototype.toString.call(obj))
       if (obj instanceof AudioClip) {
-        console.log(exportAudioClip(obj, out, obj.m_Name))
+        console.log(obj.m_Name, exportAudioClip(obj, out, obj.m_Name))
       }
     }
   }
