@@ -31,6 +31,7 @@ export enum AudioCompressionFormat {
   ATRAC9
 }
 
+/** @public */
 export class AudioClip extends NamedObject {
   public /* int */ m_Format: number = 0
   public m_Type: AudioType | null = null

@@ -111,6 +111,7 @@ class GLTextureSettings {
   }
 }
 
+/** @public */
 export class Texture2D extends Texture {
   public /* int */ m_Width: number
   public /* int */ m_Height: number

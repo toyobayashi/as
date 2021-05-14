@@ -98,24 +98,29 @@ export class AssetsManager {
           switch (objectReader.classIDType) {
             case ClassIDType.Animation:
               // obj = new Animation(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.AnimationClip:
               // obj = new AnimationClip(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.Animator:
               // obj = new Animator(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.AnimatorController:
               // obj = new AnimatorController(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.AnimatorOverrideController:
               // obj = new AnimatorOverrideController(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.AssetBundle:
               obj = new AssetBundle(objectReader)
               break
@@ -124,87 +129,107 @@ export class AssetsManager {
               break
             case ClassIDType.Avatar:
               // obj = new Avatar(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.Font:
               // obj = new Font(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.GameObject:
               // obj = new GameObject(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.Material:
               // obj = new Material(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.Mesh:
               // obj = new Mesh(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.MeshFilter:
               // obj = new MeshFilter(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.MeshRenderer:
               // obj = new MeshRenderer(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.MonoBehaviour:
               // obj = new MonoBehaviour(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.MonoScript:
               // obj = new MonoScript(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.MovieTexture:
               // obj = new MovieTexture(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.PlayerSettings:
               // obj = new PlayerSettings(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.RectTransform:
               // obj = new RectTransform(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.Shader:
               // obj = new Shader(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.SkinnedMeshRenderer:
               // obj = new SkinnedMeshRenderer(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.Sprite:
               // obj = new Sprite(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.SpriteAtlas:
               // obj = new SpriteAtlas(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.TextAsset:
               // obj = new TextAsset(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.Texture2D:
               obj = new Texture2D(objectReader)
               break
             case ClassIDType.Transform:
               // obj = new Transform(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.VideoClip:
               // obj = new VideoClip(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             case ClassIDType.ResourceManager:
               // obj = new ResourceManager(objectReader)
-              // break
-              throw new NotImplementedException('AssetsManager::readAssets()', `ClassIDType.${ClassIDType[objectReader.classIDType]}`)
+              obj = new Object(objectReader)
+              console.warn(`ClassIDType.${ClassIDType[objectReader.classIDType]} has not been implemented yet`)
+              break
             default:
               obj = new Object(objectReader)
               break

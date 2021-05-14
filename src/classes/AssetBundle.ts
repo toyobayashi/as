@@ -15,6 +15,7 @@ class AssetInfo {
   }
 }
 
+/** @public */
 export class AssetBundle extends NamedObject {
   public m_PreloadTable: Array<PPtr<Object>>
   public m_Container: Array<[string, AssetInfo]>

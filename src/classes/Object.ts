@@ -1,10 +1,9 @@
-import type { ClassIDType } from '../ClassIDType'
+import { ClassIDType } from '../ClassIDType'
 import type { ObjectReader } from '../ObjectReader'
 import type { BuildType } from '../BuildType'
 import type { SerializedFile } from '../SerializedFile'
 import { BuildTarget } from '../BuildTarget'
 import type { SerializedType } from '../SerializedType'
-
 class _Object {
   public assetsFile: SerializedFile
   public reader: ObjectReader
@@ -31,6 +30,10 @@ class _Object {
     if (this.platform === BuildTarget.NoTarget) {
       /* var m_ObjectHideFlags = */ reader.readUInt32()
     }
+  }
+
+  public get [Symbol.toStringTag] (): string {
+    return ClassIDType[this.type] ?? 'UnknownType'
   }
 
   protected hasStructMember (name: string): boolean {
