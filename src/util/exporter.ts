@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'fs'
 import { dirname, join } from 'path'
 import { AudioClip, AudioCompressionFormat, AudioType } from '../classes/AudioClip'
+import type { Texture2D } from '../classes/Texture2D'
 import { AudioClipConverter } from './AudioClipConverter'
 
 function getExtensionName (m_AudioClip: AudioClip): string {
@@ -73,6 +74,41 @@ export function exportAudioClip (m_AudioClip: AudioClip, exportPath: string, nam
     const outfile = join(exportPath, name + getExtensionName(m_AudioClip))
     mkdirSync(dirname(outfile), { recursive: true })
     writeFileSync(outfile, m_AudioData)
+  }
+  return true
+}
+
+export enum ImageFormat {
+  Bmp = 'image/bmp',
+  Png = 'image/png',
+  Jpeg = 'image/jpeg'
+}
+
+export async function exportTexture2D (m_Texture2D: Texture2D, type: 'BMP' | 'PNG' | 'JPEG' | null, exportPath: string, name: string): Promise<boolean> {
+  let format: ImageFormat | undefined
+  const ext = type
+  switch (ext) {
+    case 'BMP':
+      format = ImageFormat.Bmp
+      break
+    case 'PNG':
+      format = ImageFormat.Png
+      break
+    case 'JPEG':
+      format = ImageFormat.Jpeg
+      break
+    default: break
+  }
+  if (format) {
+    const bitmap = m_Texture2D.convertToBitmap(true)
+    if (bitmap == null) { return false }
+    const outfile = join(exportPath, name + '.' + format.split('/')[1])
+    mkdirSync(dirname(outfile), { recursive: true })
+    await bitmap.writeAsync(outfile)
+  } else {
+    const outfile = join(exportPath, name + '.tex')
+    mkdirSync(dirname(outfile), { recursive: true })
+    writeFileSync(outfile, m_Texture2D.image_data.getData())
   }
   return true
 }
