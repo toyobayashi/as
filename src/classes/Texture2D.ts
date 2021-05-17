@@ -1,6 +1,9 @@
 import type { ObjectReader } from '../ObjectReader'
 import { ResourceReader } from '../ResourceReader'
 import { Texture } from './Texture'
+import { Texture2DConverter } from '../util/Texture2DConverter'
+
+import type Jimp = require('jimp')
 
 export enum TextureFormat {
   Alpha8 = 1,
@@ -182,5 +185,10 @@ export class Texture2D extends Texture {
       resourceReader = new ResourceReader(reader, BigInt(reader.pos), image_data_size)
     }
     this.image_data = resourceReader
+  }
+
+  public convertToBitmap (flip: boolean): Jimp | null {
+    const converter = new Texture2DConverter(this)
+    return converter.convertToBitmap(flip)
   }
 }
