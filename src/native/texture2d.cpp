@@ -1,7 +1,7 @@
 #include <cstring>
 
 #include "napi.h"
-#include "texture2d/texture2d.h"
+#include "texture2d.h"
 
 #define TEXTRUE_API(name) \
   static Boolean _##name(const CallbackInfo& info) {\

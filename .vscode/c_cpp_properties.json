@@ -5,6 +5,7 @@
       "includePath": [
         "${workspaceFolder}/node_modules/node-addon-api",
         // "${workspaceFolder}/deps/fmod/inc",
+        "${workspaceFolder}/deps/Texture2DDecoderNative",
         "${env:HOME}/AppData/Local/node-gyp/Cache/14.16.1/include/node"
       ],
       "defines": [
