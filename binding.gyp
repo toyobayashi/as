@@ -4,23 +4,6 @@
   },
   'targets': [
     {
-      'target_name': 'texture2d',
-      'type': 'static_library',
-      'sources': [
-        'src/native/texture2d/astc.cpp',
-        'src/native/texture2d/atc.cpp',
-        'src/native/texture2d/bcn.cpp',
-        'src/native/texture2d/crunch.cpp',
-        'src/native/texture2d/dllmain.cpp',
-        'src/native/texture2d/etc.cpp',
-        'src/native/texture2d/pvrtc.cpp',
-        'src/native/texture2d/unitycrunch.cpp'
-      ],
-      'includes': [
-        './common.gypi'
-      ]
-    },
-    {
       'target_name': 'decoder',
       'sources': [
         'src/native/texture2d.cpp'
@@ -29,7 +12,7 @@
         './common.gypi'
       ],
       'dependencies': [
-        'texture2d',
+        'deps/Texture2DDecoderNative/Texture2DDecoderNative.gyp:texture2ddecoder',
       ],
     },
     {
