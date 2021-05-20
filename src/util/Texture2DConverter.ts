@@ -5,13 +5,36 @@ import { NotImplementedException } from './Exception'
 
 import Jimp = require('jimp')
 
+const TextureDecoder: {
+  DecodeDXT1: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeDXT5: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeETC1: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeETC2: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeETC2A1: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeETC2A8: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeEACR: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeEACRSigned: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeEACRG: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeEACRGSigned: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeBC4: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeBC5: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeBC6: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeBC7: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeATCRGB4: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodeATCRGBA8: (data: Buffer, width: number, height: number, image: Buffer) => boolean
+  DecodePVRTC: (data: Buffer, width: number, height: number, image: Buffer, is2bpp: boolean) => boolean
+  DecodeASTC: (data: Buffer, width: number, height: number, blockWidth: number, blockHeight: number, image: Buffer) => boolean
+  UnpackCrunch: (data: Buffer) => Buffer | null
+  UnpackUnityCrunch: (data: Buffer) => Buffer | null
+} = require('../../../dist/decoder.node')
+
 export class Texture2DConverter {
   private /* int */ readonly m_Width: number
   private /* int */ readonly m_Height: number
   private readonly m_TextureFormat: TextureFormat
-  private /* int */ readonly image_data_size: number
-  private readonly image_data: Buffer
-  // private readonly version: number[]
+  private /* int */ image_data_size: number
+  private image_data: Buffer
+  private readonly version: number[]
   private readonly platform: BuildTarget
 
   public constructor (m_Texture2D: Texture2D) {
@@ -20,7 +43,7 @@ export class Texture2DConverter {
     this.m_Width = m_Texture2D.m_Width
     this.m_Height = m_Texture2D.m_Height
     this.m_TextureFormat = m_Texture2D.m_TextureFormat
-    // this.version = m_Texture2D.version
+    this.version = m_Texture2D.version
     this.platform = m_Texture2D.platform
   }
 
@@ -287,71 +310,148 @@ export class Texture2DConverter {
   }
 
   private decodeBC4 (): Buffer | null {
-    throw new NotImplementedException('decodeBC4', 'BC4')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeBC4(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
   private decodeBC5 (): Buffer | null {
-    throw new NotImplementedException('decodeBC5', 'BC5')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeBC5(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
   private decodeBC6H (): Buffer | null {
-    throw new NotImplementedException('decodeBC6H', 'BC6H')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeBC6(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
   private decodeBC7 (): Buffer | null {
-    throw new NotImplementedException('decodeBC7', 'BC7')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeBC7(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
   private unpackCrunch (): boolean {
-    throw new Error('Method not implemented.')
+    let result: Buffer | null = null
+    if (this.version[0] > 2017 || (this.version[0] === 2017 && this.version[1] >= 3) || // 2017.3 and up
+                this.m_TextureFormat === TextureFormat.ETC_RGB4Crunched ||
+                this.m_TextureFormat === TextureFormat.ETC2_RGBA8Crunched) {
+      result = TextureDecoder.UnpackUnityCrunch(this.image_data)
+    } else {
+      result = TextureDecoder.UnpackCrunch(this.image_data)
+    }
+    if (result != null) {
+      this.image_data = result
+      this.image_data_size = result.length
+      return true
+    }
+    return false
   }
 
-  private decodePVRTC (_: boolean): Buffer | null {
-    throw new NotImplementedException('decodePVRTC', 'PVRTC')
+  private decodePVRTC (is2bpp: boolean): Buffer | null {
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodePVRTC(this.image_data, this.m_Width, this.m_Height, buff, is2bpp)) {
+      return null
+    }
+    return buff
   }
 
   private decodeETC1 (): Buffer | null {
-    throw new NotImplementedException('decodeETC1', 'ETC1')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeETC1(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
   private decodeATCRGB4 (): Buffer | null {
-    throw new NotImplementedException('decodeATCRGB4', 'ATCRGB4')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeATCRGB4(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
   private decodeATCRGBA8 (): Buffer | null {
-    throw new NotImplementedException('decodeATCRGBA8', 'ATCRGBA8')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeATCRGBA8(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
   private decodeEACR (): Buffer | null {
-    throw new NotImplementedException('decodeEACR', 'EACR')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeEACR(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
   private decodeEACRSigned (): Buffer | null {
-    throw new NotImplementedException('decodeEACRSigned', 'EACRSigned')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeEACRSigned(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
   private decodeEACRG (): Buffer | null {
-    throw new NotImplementedException('decodeEACRG', 'EACRG')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeEACRG(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
   private decodeEACRGSigned (): Buffer | null {
-    throw new NotImplementedException('decodeEACRGSigned', 'EACRGSigned')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeEACRGSigned(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
   private decodeETC2 (): Buffer | null {
-    throw new NotImplementedException('decodeETC2', 'ETC2')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeETC2(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
   private decodeETC2A1 (): Buffer | null {
-    throw new NotImplementedException('decodeETC2A1', 'ETC2A1')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeETC2A1(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
   private decodeETC2A8 (): Buffer | null {
-    throw new NotImplementedException('decodeETC2A8', 'ETC2A8')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeETC2A8(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
-  private decodeASTC (_: number): Buffer | null {
-    throw new NotImplementedException('decodeASTC', 'ASTC')
+  private decodeASTC (blocksize: number): Buffer | null {
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeASTC(this.image_data, this.m_Width, this.m_Height, blocksize, blocksize, buff)) {
+      return null
+    }
+    return buff
   }
 
   private decodeRG16 (): Buffer | null {
@@ -460,12 +560,20 @@ export class Texture2DConverter {
     return buff
   }
 
-  private decodeDXT1 (): Buffer {
-    throw new NotImplementedException('decodeDXT1', 'DXT1')
+  private decodeDXT1 (): Buffer | null {
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeDXT1(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
-  private decodeDXT5 (): Buffer {
-    throw new NotImplementedException('decodeDXT5', 'DXT5')
+  private decodeDXT5 (): Buffer | null {
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    if (!TextureDecoder.DecodeDXT5(this.image_data, this.m_Width, this.m_Height, buff)) {
+      return null
+    }
+    return buff
   }
 
   private decodeRGBA4444 (): Buffer {
