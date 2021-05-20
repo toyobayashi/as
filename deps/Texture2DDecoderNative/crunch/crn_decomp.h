@@ -318,7 +318,11 @@ namespace crnd
 #ifdef _WIN32
 #include <memory.h>
 #else
+#ifdef __APPLE__
+#include <malloc/malloc.h>
+#else
 #include <malloc.h>
+#endif
 #endif
 #include <stdarg.h>
 #include <new> // needed for placement new, _msize, _expand
@@ -2427,7 +2431,11 @@ namespace crnd
 #ifdef _WIN32
             *pActual_size = p_new ? ::_msize(p_new) : 0;
 #else
+#ifdef __APPLE__
+            *pActual_size = p_new ? malloc_size(p_new) : 0;
+#else
             *pActual_size = p_new ? malloc_usable_size(p_new) : 0;
+#endif
 #endif
          }
       }
@@ -2463,7 +2471,11 @@ namespace crnd
 #ifdef _WIN32
             *pActual_size = ::_msize(p_final_block);
 #else
+#ifdef __APPLE__
+            *pActual_size = ::malloc_size(p_final_block);
+#else
             *pActual_size = ::malloc_usable_size(p_final_block);
+#endif
 #endif
          }
       }
@@ -2477,7 +2489,11 @@ namespace crnd
 #ifdef _WIN32
       return p ? _msize(p) : 0;
 #else
+#ifdef __APPLE__
+      return p ? malloc_size(p) : 0;
+#else
       return p ? malloc_usable_size(p) : 0;
+#endif
 #endif
    }
 
@@ -2530,7 +2546,7 @@ namespace crnd
          return NULL;
       }
 
-      CRND_ASSERT(((uint32)p_new & (CRND_MIN_ALLOC_ALIGNMENT - 1)) == 0);
+      CRND_ASSERT(((uint32)(size_t)p_new & (CRND_MIN_ALLOC_ALIGNMENT - 1)) == 0);
 
       return p_new;
    }
@@ -2555,7 +2571,7 @@ namespace crnd
       if (pActual_size)
          *pActual_size = actual_size;
 
-      CRND_ASSERT(((uint32)p_new & (CRND_MIN_ALLOC_ALIGNMENT - 1)) == 0);
+      CRND_ASSERT(((uint32)(size_t)p_new & (CRND_MIN_ALLOC_ALIGNMENT - 1)) == 0);
 
       return p_new;
    }
