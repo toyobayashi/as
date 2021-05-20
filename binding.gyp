@@ -1,14 +1,41 @@
 {
   "variables": {
-    "module_name": "binding",
-    "module_path": "./dist",
-    "PRODUCT_DIR": "./build/Release"
+    "module_path": "./dist"
   },
   'targets': [
     {
-      'target_name': '<(module_name)',
+      'target_name': 'texture2d',
+      'type': 'static_library',
       'sources': [
-        'src/native/index.cpp',
+        'src/native/texture2d/astc.cpp',
+        'src/native/texture2d/atc.cpp',
+        'src/native/texture2d/bcn.cpp',
+        'src/native/texture2d/crunch.cpp',
+        'src/native/texture2d/dllmain.cpp',
+        'src/native/texture2d/etc.cpp',
+        'src/native/texture2d/pvrtc.cpp',
+        'src/native/texture2d/unitycrunch.cpp'
+      ],
+      'includes': [
+        './common.gypi'
+      ]
+    },
+    {
+      'target_name': 'decoder',
+      'sources': [
+        'src/native/texture2d.cpp'
+      ],
+      'includes': [
+        './common.gypi'
+      ],
+      'dependencies': [
+        'texture2d',
+      ],
+    },
+    {
+      'target_name': 'fmod',
+      'sources': [
+        'src/native/fmod.cpp',
         'src/native/windlfcn.c'
       ],
       'includes': [
@@ -33,10 +60,10 @@
     {
       "target_name": "action_after_build",
       "type": "none",
-      "dependencies": [ "<(module_name)" ],
+      "dependencies": [ "fmod", "decoder" ],
       "copies": [
         {
-          "files": [ "<(PRODUCT_DIR)/<(module_name).node" ],
+          "files": [ "<(PRODUCT_DIR)/fmod.node", "<(PRODUCT_DIR)/decoder.node" ],
           "destination": "<(module_path)"
         }
       ],

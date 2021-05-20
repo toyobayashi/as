@@ -6,8 +6,8 @@ import { AudioClip, AudioCompressionFormat, AudioType } from '../classes/AudioCl
 const binding: {
   init: (dllpath: string) => boolean
   convertToWav: (buffer: Buffer, size: number) => Buffer | null
-} = require('../../../dist/binding.node')
-// } = require('../../../build/Debug/binding.node')
+} = require('../../../dist/fmod.node')
+// } = require('../../../build/Debug/fmod.node')
 
 function getDLLname (name: string): string {
   if (process.platform === 'win32') {
