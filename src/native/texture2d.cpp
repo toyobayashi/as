@@ -1,7 +1,9 @@
 #include <cstring>
+#include <cmath>
 
 #include "napi.h"
 #include "texture2d.h"
+#include "HalfHelper.hpp"
 
 #define TEXTRUE_API(name) \
   static Boolean _##name(const CallbackInfo& info) {\
@@ -113,6 +115,43 @@ static Value _UnpackUnityCrunch(const CallbackInfo& info) {
   });
 }
 
+static Value _DecodeRHalf(const CallbackInfo& info) {
+  Buffer<uint8_t> image_data = info[0].As<Buffer<uint8_t>>();
+  Buffer<uint8_t> buff = info[1].As<Buffer<uint8_t>>();
+  size_t length = buff.Get("length").As<Number>().Uint32Value();
+  for (size_t i = 0; i < length; i += 4) {
+    buff[i] = 0;
+    buff[i + 1] = 0;
+    buff[i + 2] = (uint8_t)::round(Half::ToHalf(image_data.Data(), i / 2).toFloat() * (float)255);
+    buff[i + 3] = 255;
+  }
+  return info.Env().Undefined();
+}
+static Value _DecodeRGHalf(const CallbackInfo& info) {
+  Buffer<uint8_t> image_data = info[0].As<Buffer<uint8_t>>();
+  Buffer<uint8_t> buff = info[1].As<Buffer<uint8_t>>();
+  size_t length = buff.Get("length").As<Number>().Uint32Value();
+  for (size_t i = 0; i < length; i += 4) {
+    buff[i] = 0;
+    buff[i + 1] = (uint8_t)::round(Half::ToHalf(image_data.Data(), i + 2).toFloat() * (float)255);
+    buff[i + 2] = (uint8_t)::round(Half::ToHalf(image_data.Data(), i).toFloat() * (float)255);
+    buff[i + 3] = 255;
+  }
+  return info.Env().Undefined();
+}
+static Value _DecodeRGBAHalf(const CallbackInfo& info) {
+  Buffer<uint8_t> image_data = info[0].As<Buffer<uint8_t>>();
+  Buffer<uint8_t> buff = info[1].As<Buffer<uint8_t>>();
+  size_t length = buff.Get("length").As<Number>().Uint32Value();
+  for (size_t i = 0; i < length; i += 4) {
+    buff[i] = (uint8_t)::round(Half::ToHalf(image_data.Data(), i * 2 + 4).toFloat() * (float)255);
+    buff[i + 1] = (uint8_t)::round(Half::ToHalf(image_data.Data(), i * 2 + 2).toFloat() * (float)255);
+    buff[i + 2] = (uint8_t)::round(Half::ToHalf(image_data.Data(), i * 2).toFloat() * (float)255);
+    buff[i + 3] = (uint8_t)::round(Half::ToHalf(image_data.Data(), i * 2 + 6).toFloat() * (float)255);
+  }
+  return info.Env().Undefined();
+}
+
 static Object _index(Env env, Object exports) {
   exports["DecodePVRTC"] = Function::New(env, _DecodePVRTC, "DecodePVRTC");
   exports["DecodeASTC"] = Function::New(env, _DecodeASTC, "DecodeASTC");
@@ -136,6 +175,10 @@ static Object _index(Env env, Object exports) {
 
   exports["UnpackCrunch"] = Function::New(env, _UnpackCrunch, "UnpackCrunch");
   exports["UnpackUnityCrunch"] = Function::New(env, _UnpackUnityCrunch, "UnpackUnityCrunch");
+
+  exports["DecodeRHalf"] = Function::New(env, _DecodeRHalf, "DecodeRHalf");
+  exports["DecodeRGHalf"] = Function::New(env, _DecodeRGHalf, "DecodeRGHalf");
+  exports["DecodeRGBAHalf"] = Function::New(env, _DecodeRGBAHalf, "DecodeRGBAHalf");
   return exports;
 }
 

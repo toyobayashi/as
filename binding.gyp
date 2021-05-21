@@ -6,7 +6,9 @@
     {
       'target_name': 'decoder',
       'sources': [
-        'src/native/texture2d.cpp'
+        'src/native/texture2d.cpp',
+        'src/native/HalfHelper.cpp',
+        'src/native/Half.cpp'
       ],
       'includes': [
         './common.gypi'

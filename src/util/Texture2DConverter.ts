@@ -1,7 +1,6 @@
 import type { Texture2D } from '../classes/Texture2D'
 import { TextureFormat } from '../classes/Texture2D'
 import { BuildTarget } from '../BuildTarget'
-import { NotImplementedException } from './Exception'
 
 import Jimp = require('jimp')
 
@@ -26,6 +25,9 @@ const TextureDecoder: {
   DecodeASTC: (data: Buffer, width: number, height: number, blockWidth: number, blockHeight: number, image: Buffer) => boolean
   UnpackCrunch: (data: Buffer) => Buffer | null
   UnpackUnityCrunch: (data: Buffer) => Buffer | null
+  DecodeRHalf: (image: Buffer, buff: Buffer) => void
+  DecodeRGHalf: (image: Buffer, buff: Buffer) => void
+  DecodeRGBAHalf: (image: Buffer, buff: Buffer) => void
 } = require('../../../dist/decoder.node')
 
 export class Texture2DConverter {
@@ -603,15 +605,21 @@ export class Texture2DConverter {
   }
 
   private decodeRHalf (): Buffer {
-    throw new NotImplementedException('decodeRHalf', 'RHalf')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    TextureDecoder.DecodeRHalf(this.image_data, buff)
+    return buff
   }
 
   private decodeRGHalf (): Buffer {
-    throw new NotImplementedException('decodeRGHalf', 'RGHalf')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    TextureDecoder.DecodeRGHalf(this.image_data, buff)
+    return buff
   }
 
   private decodeRGBAHalf (): Buffer {
-    throw new NotImplementedException('decodeRGBAHalf', 'RGBAHalf')
+    const buff = Buffer.alloc(this.m_Width * this.m_Height * 4)
+    TextureDecoder.DecodeRGBAHalf(this.image_data, buff)
+    return buff
   }
 
   private decodeRFloat (): Buffer {
